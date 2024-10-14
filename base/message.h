@@ -9,6 +9,7 @@
 
 #define MSG_SIZE 3 // fixed size
 #define ID_SIZE 64
+typedef char (*MutatorCallback)(char);
 /*
  * Base class for Message
  * Wraps body of char array with fixed MSG_SIZE
@@ -31,17 +32,11 @@ public:
   bool isValid() const;
   bool isNull() const { return nulled; };
   std::string stringBody() const;
-  void applyFilter(Mutator *mut);
-  char *data() const {
-    char *_data = new char[_size + ID_SIZE];
-    std::memset(_data, '0', _size + ID_SIZE);
-    std::copy(_id, _id + ID_SIZE - 1, _data);
-    std::copy(_body, _body + _size, _data + ID_SIZE - 1);
-    return _data;
-  }
+  void applyFilter(Mutator *mut);;
+  char *data() const;
   const char *id() { return _id; }
   size_t dataSize() { return _size + ID_SIZE; }
-  void applyFilter(char (*mutator)(char &));
+  void applyFilter(MutatorCallback callback);
   static const size_t maxMessageSize();
   static Message NullMessage() { return Message(); }
 };

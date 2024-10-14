@@ -6,13 +6,13 @@
 class LowerMutator : public Mutator {
 
 public:
-  LowerMutator(){};
+  LowerMutator() : Mutator("Lower mutator"){};
   virtual char apply(char &in) override { return tolower(in); }
 };
 class UpperMutator : public Mutator {
 
 public:
-  UpperMutator(){};
+  UpperMutator() : Mutator("Upper mutator"){};
   virtual char apply(char &in) override { return toupper(in); }
 };
 #endif // SPANMUTATOR_H

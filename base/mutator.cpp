@@ -1,3 +1,10 @@
 #include "mutator.h"
+#include "message.h"
 
-Mutator::Mutator() {}
+bool Mutator::checkMsg(const Message &msg) {
+  if (msg.isNull() || !msg.isValid()) {
+    return false;
+  }
+  // some checks
+  return true;
+}

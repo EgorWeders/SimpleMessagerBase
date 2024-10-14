@@ -60,10 +60,18 @@ void Message::applyFilter(Mutator *mut) {
     }
 }
 
-void Message::applyFilter(char (*mutator)(char &)) {
+char *Message::data() const {
+  char *_data = new char[_size + ID_SIZE];
+  std::memset(_data, '0', _size + ID_SIZE);
+  std::copy(_id, _id + ID_SIZE - 1, _data);
+  std::copy(_body, _body + _size, _data + ID_SIZE - 1);
+  return _data;
+}
+
+void Message::applyFilter(MutatorCallback callback) {
   if (isValid())
     for (int i = 0; i < _size; i++) {
-      _body[i] = mutator(_body[i]);
+      _body[i] = callback(_body[i]);
     }
 }
 

@@ -2,7 +2,6 @@
 #define IDGENERATOR_H
 #include <atomic>
 #include <cstring>
-#include <string.h>
 #include <string>
 class IdGenerator {
 

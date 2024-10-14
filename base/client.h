@@ -36,7 +36,6 @@ public:
   size_t recvCount() { return recvQueue.size(); }
   virtual size_t sendAll() {
     size_t res = 0;
-    ;
     while (!senderQueue.empty()) {
       res += sendMessage();
     }

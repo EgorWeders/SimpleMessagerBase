@@ -29,7 +29,6 @@ bool Client::receiveMessage(const Message &msg) {
   if (this->recvMutator) {
     Message tempMsgd = msg;
     tempMsgd.applyFilter(recvMutator);
-
     recvQueue.insert(recvQueue.begin(), tempMsgd);
   } else {
     recvQueue.insert(recvQueue.begin(), msg);
