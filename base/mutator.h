@@ -29,12 +29,12 @@ public:
   virtual void reset() {}
   virtual char apply(char &in) { return in; }
   virtual bool checkMsg(const Message &msg);
-  bool checkFlag(int flags) { return (this->_flags & flags) == flags; }
-  int csdn_paged_array_set_flag(int flags) {
+  virtual bool checkFlag(int flags) { return (this->_flags & flags) == flags; }
+  int setFlag(int flags) {
     this->_flags |= flags;
     return _flags;
   }
-  int csdn_paged_array_unset_flag(int flags) {
+  int unsetFlag(int flags) {
     this->_flags &= ~flags;
     return _flags;
   }
