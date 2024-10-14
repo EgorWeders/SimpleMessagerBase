@@ -20,8 +20,9 @@ int main(int argc, char *argv[]) {
     if (!loader.load(path.toLatin1())) {
       qWarning() << "Cannot load " << path;
     }
-    qWarning() << "Loaded"
-               << loader.createFrom(loader.size() - 1)->id().c_str();
+    Mutator *currentMutator = loader.createFrom(loader.size() - 1);
+    qWarning() << "Loaded" << currentMutator->id().c_str();
+    delete currentMutator;
     args.removeAt(pluginArgEntry);
     args.removeAt(pluginArgEntry);
     pluginArgEntry = a.arguments().indexOf("--plugin", pluginArgEntry + 1);
@@ -46,6 +47,8 @@ int main(int argc, char *argv[]) {
   }
   UdpClient fr(args.at(args.size() - 2)),
       sc(args.at(args.size() - 1), TEST_PORT);
+  if (loader.size() > 0)
+    fr.setSendMutator(loader.createFrom(loader.size() - 1));
   if (!fr.isHostValid()) {
     qWarning() << "Provide valid ip  for first client. Address : "
                << fr.getHost().toString();
