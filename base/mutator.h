@@ -7,10 +7,10 @@
 class Mutator {
 
 public:
-	Mutator();
+  Mutator();
 
-	virtual void reset() {}
-	virtual char apply(char &in) { return in; }
+  virtual void reset() {}
+  virtual char apply(char &in) { return in; }
 };
 
 #endif // MUTATOR_H
