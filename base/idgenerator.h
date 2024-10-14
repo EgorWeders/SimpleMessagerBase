@@ -19,15 +19,15 @@ public:
   IdCounterGenerator(){};
   char *newId() override {
     char *temp = new char[idSize() + 1];
-
     return newId(temp);
   }
   char *newId(char *idDst) override {
-    std::string strData = std::to_string(counter++);
+    std::string strData = std::to_string(counter);
     memcpy(idDst, strData.data(), strData.size() + 1); // null term
+    counter++;
     return idDst;
   }
-  size_t idSize() override { return std::to_string(counter++).size(); }
+  size_t idSize() override { return std::to_string(counter).size(); }
   void reset() override { counter = 0; };
 };
 
