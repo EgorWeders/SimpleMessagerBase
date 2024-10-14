@@ -1,11 +1,34 @@
+#include "base/mutatorloader.h"
 #include <QCoreApplication>
+#include <QFileInfo>
 #include <QHostAddress>
 #include <network/udpclient.h>
 
 const int16_t TEST_PORT = 1337;
 int main(int argc, char *argv[]) {
   QCoreApplication a(argc, argv);
-  switch (a.arguments().size()) {
+  int pluginArgEntry = a.arguments().indexOf("--plugin");
+  MutatorLoader loader;
+  QStringList args = a.arguments();
+  while (pluginArgEntry >= 0) {
+    QString path = args.value(pluginArgEntry + 1);
+    if (!QFileInfo::exists(path)) {
+      qWarning() << "Plugin not found at " << pluginArgEntry + 1 << "argument"
+                 << path;
+      return -1;
+    }
+    if (!loader.load(path.toLatin1())) {
+      qWarning() << "Cannot load " << path;
+    }
+    qWarning() << "Loaded"
+               << loader.createFrom(loader.size() - 1)->id().c_str();
+    args.removeAt(pluginArgEntry);
+    args.removeAt(pluginArgEntry);
+    pluginArgEntry = a.arguments().indexOf("--plugin", pluginArgEntry + 1);
+  }
+  qWarning() << "Plugin count" << loader.size();
+
+  switch (args.size()) {
   case 1:
     qWarning() << "Provide ip   for all clients";
     break;
@@ -21,8 +44,8 @@ int main(int argc, char *argv[]) {
     ;
     break;
   }
-  UdpClient fr(a.arguments().at(a.arguments().size() - 2)),
-      sc(a.arguments().at(a.arguments().size() - 1), TEST_PORT);
+  UdpClient fr(args.at(args.size() - 2)),
+      sc(args.at(args.size() - 1), TEST_PORT);
   if (!fr.isHostValid()) {
     qWarning() << "Provide valid ip  for first client. Address : "
                << fr.getHost().toString();

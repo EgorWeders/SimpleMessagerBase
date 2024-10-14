@@ -25,11 +25,10 @@ private:
 public:
   Mutator(const std::string &id) : _id(id) { assert(id.size() > 0); };
   virtual ~Mutator() {}
-  virtual std::string id() { return _id; }
   virtual void reset() {}
   virtual char apply(char &in) { return in; }
-  virtual bool checkMsg(const Message &msg);
-  virtual bool checkFlag(int flags) { return (this->_flags & flags) == flags; }
+  virtual bool checkMsg(const Message &msg) = 0;
+  bool checkFlag(int flags) { return (this->_flags & flags) == flags; }
   int setFlag(int flags) {
     this->_flags |= flags;
     return _flags;
@@ -40,6 +39,10 @@ public:
   }
   bool isSkippable() const { return skippable; }
   void setSkippable(bool value) { skippable = value; }
+  std::string id() const
+  {
+    return _id;
+  }
 };
 
 #endif // MUTATOR_H

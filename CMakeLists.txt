@@ -22,6 +22,7 @@ add_executable(TestMsgPing
 	network/udpclient.h network/udpclient.cpp
 	base/mutator.h base/mutator.cpp
 	base/idgenerator.h base/idgenerator.cpp
+        base/mutatorloader.h base/mutatorloader.cpp
 
 )
 target_link_libraries(TestMsgPing Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Network)
