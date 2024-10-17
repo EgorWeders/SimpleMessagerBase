@@ -1,4 +1,4 @@
-# Testing ground for a messenger based on qt and mutator mechanism (a kind of visitor boost) 
+# Testing ground for a messenger based on qt and mutator mechanism (a kind of boost visitor ) 
 
 (The project was created for testing and training) 
 # Goal: 
