@@ -5,6 +5,7 @@
 #include "message.h"
 #include "mutator.h"
 #include <algorithm>
+#include <unordered_map>
 #include <vector>
 const int CLIENT_ID_SIZE = 64;
 /*
@@ -12,25 +13,24 @@ const int CLIENT_ID_SIZE = 64;
  *
  * Can use Mutators (applying on char)
  */
+
 class Client {
 protected:
   std::vector<Message> senderQueue;
   std::vector<Message> recvQueue;
   Mutator *sendMutator = nullptr;
-  Mutator *recvMutator = nullptr;
+  Mutator             *recvMutator = nullptr;
   IdGenerator *idGen = nullptr;
 
 public:
   Client();
   ~Client() {}
   virtual void setSendMutator(Mutator *mut) { this->sendMutator = mut; }
-  virtual void setRecvMutator(Mutator *mut) {
-    this->recvMutator = mut;
-  } // can be nullptr
+  virtual void setRecvMutator(Mutator *mut) { this->recvMutator = mut; } // can be nullptr
   virtual bool sendMessage(Client *reciever);
   virtual bool sendMessage() { // Not implemented
     return false;
-  };
+  }
   size_t sendAll(Client *reciever);
   size_t sendCount() { return senderQueue.size(); }
   size_t recvCount() { return recvQueue.size(); }
@@ -40,9 +40,9 @@ public:
       res += sendMessage();
     }
     return res;
-  };
+  }
   virtual bool receiveMessage(const Message &msg);
-  virtual int receiveAll() { return false; };
+  virtual int  receiveAll() { return false; }
   size_t appendMessage(const char body[], size_t size);
   Message getLastMessage() const;
   Message takeLastMessage();

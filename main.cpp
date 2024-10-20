@@ -31,14 +31,14 @@ int main(int argc, char *argv[]) {
 
   switch (args.size()) {
   case 1:
-    qWarning() << "Provide ip   for all clients";
-    break;
-  case 2:
+      qWarning() << "Provide ip for  all clients";
+      return -1;
+            case 2:
     qWarning() << "Provide ip  for second client";
     break;
-  case 3:
+            case 3:
     break;
-  default:
+            default:
     qWarning() << QStringLiteral("Too many clients, picking last 2 : %1 and %2")
                       .arg(a.arguments().at(a.arguments().size() - 2))
                       .arg(a.arguments().at(a.arguments().size() - 1));
